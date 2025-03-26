@@ -32,7 +32,7 @@ jobs:
       run: |
         COVERAGE=$(mvn jacoco:report | grep -oP 'Total.*?(\d+\.\d+)%' | tail -1 | grep -oP '\d+\.\d+')
         if (( $(echo "$COVERAGE < 0.0" | bc -l) )); then
-          echo "Code coverage is below TODO%"
+          echo "Code coverage is below 0%"
           exit 1
         fi
 
