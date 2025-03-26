@@ -31,10 +31,14 @@ jobs:
     - name: Check code coverage
       run: |
         COVERAGE=$(mvn jacoco:report | grep -oP 'Total.*?(\d+\.\d+)%' | tail -1 | grep -oP '\d+\.\d+')
-        if (( $(echo "$COVERAGE < 0.0" | bc -l) )); then
-          echo "Code coverage is below 0%"
-          exit 1
-        fi
+          if [[ -z "$COVERAGE" ]]; then
+            echo "Failed to parse code coverage percentage"
+            exit 1
+          fi
+          if (( $(echo "$COVERAGE < 0.0" | bc -l) )); then
+            echo "Code coverage is below 0%"
+            exit 1
+          fi
 
     - name: Deploy to GitHub Packages
       run: mvn deploy
