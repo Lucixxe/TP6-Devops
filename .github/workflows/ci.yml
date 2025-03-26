@@ -24,3 +24,12 @@ jobs:
 
     - name: Run tests
       run: mvn test
+
+    - name: Set up GitHub packages authentication
+      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+
+    - name: Deploy to Maven repository
+      run: mvn deploy -DskipTests
+
+    - name: Deploy to GitHub packages
+      run: mvn deploy -DskipTests -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/Lucixxe/TP6-Devops
