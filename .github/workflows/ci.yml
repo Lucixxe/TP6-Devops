@@ -29,6 +29,6 @@ jobs:
       run: mvn jacoco:report
 
     - name: Deploy to GitHub Packages
-      run: mvn deploy
+      run: mvn deploy -e -X
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
