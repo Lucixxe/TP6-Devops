@@ -24,3 +24,11 @@ jobs:
 
     - name: Run tests
       run: mvn test
+
+    - name: Run JaCoCo coverage
+      run: mvn jacoco:report
+
+    - name: Deploy to GitHub Packages
+      run: mvn deploy -e -X
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

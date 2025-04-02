@@ -12,6 +12,8 @@ public class App {
         df.printFull();
         df.printHead(2);
         df.printTail(2);
+        System.out.println("Test CD pipeline");
+
 
     }
 }
