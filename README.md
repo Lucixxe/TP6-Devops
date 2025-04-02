@@ -18,8 +18,7 @@ Une bibliothèque Java d'analyse de données, inspirée de Pandas.
 - Pull requests avec revue de code (à venir)
 
 ## CI/CD Status
-![CI](https://github.com/Lucixxe/TP6-Devops/workflows/CI/badge.svg)
-Test de la nouvelle feature
+[![CI/CD Maven Deploy](https://github.com/Lucixxe/TP6-Devops/actions/workflows/deploy.yml/badge.svg?branch=zodecky%2Ffeature%2Fadd-cd)](https://github.com/Lucixxe/TP6-Devops/actions/workflows/deploy.yml)
 
 ## Auteur
 Ilian Benaoudia
