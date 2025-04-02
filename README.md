@@ -19,7 +19,9 @@ Une bibliothèque Java d'analyse de données, inspirée de Pandas.
 
 ## CI/CD Status
 ![CI](https://github.com/Lucixxe/TP6-Devops/workflows/CI/badge.svg)
+Test de la nouvelle feature
 
 ## Auteur
 Ilian Benaoudia
 Gabriel Zagury de Magalhaes
+
