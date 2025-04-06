@@ -1,81 +1,143 @@
 package com.ilian.dataframe;
 
-import java.io.IOException;
 import java.util.*;
 
+/**
+ * Représente un tableau de données structuré, composé de colonnes (Series) identifiées par des étiquettes.
+ */
 public class DataFrame {
     private Map<String, Series<?>> columns;
-    private int rowCount;
 
+    /**
+     * Crée un DataFrame à partir d'une liste de séries.
+     *
+     * @param seriesList Liste des séries à intégrer dans le DataFrame.
+     * @throws IllegalArgumentException si plusieurs séries ont des étiquettes identiques.
+     */
     public DataFrame(List<Series<?>> seriesList) {
-        columns = new LinkedHashMap<>();
-        if (seriesList.isEmpty()) {
-            throw new IllegalArgumentException("La liste des séries ne peut pas être vide.");
-        }
-
-        rowCount = seriesList.get(0).size();
-
+        columns = new HashMap<>();
         for (Series<?> series : seriesList) {
-            if (series.size() != rowCount) {
-                throw new IllegalArgumentException("Toutes les séries doivent avoir la même taille.");
+            String label = series.getLabel();
+            if (columns.containsKey(label)) {
+                throw new IllegalArgumentException("Duplicate column label: " + label);
             }
-            columns.put(series.getLabel(), series);
+            columns.put(label, series);
         }
     }
 
+    /**
+     * Affiche l'intégralité du contenu du DataFrame dans la console.
+     */
     public void printFull() {
-        // Affiche les labels de colonnes
-        System.out.println(String.join(" | ", columns.keySet()));
+        Set<String> labels = columns.keySet();
+        for (String label : labels) {
+            System.out.print(label + "\t");
+        }
+        System.out.println();
 
+        int rowCount = getRowCount();
         for (int i = 0; i < rowCount; i++) {
-            for (String label : columns.keySet()) {
-                Object value = columns.get(label).get(i);
-                System.out.print(value + " | ");
+            for (String label : labels) {
+                Series<?> series = columns.get(label);
+                System.out.print(series.get(i) + "\t");
             }
             System.out.println();
         }
     }
 
+    /**
+     * Affiche les premières lignes du DataFrame.
+     *
+     * @param n Le nombre de lignes à afficher depuis le haut.
+     */
     public void printHead(int n) {
-        System.out.println("[HEAD] " + String.join(" | ", columns.keySet()));
-        for (int i = 0; i < Math.min(n, rowCount); i++) {
-            for (String label : columns.keySet()) {
-                Object value = columns.get(label).get(i);
-                System.out.print(value + " | ");
+        Set<String> labels = columns.keySet();
+        for (String label : labels) {
+            System.out.print(label + "\t");
+        }
+        System.out.println();
+
+        int rowCount = Math.min(n, getRowCount());
+        for (int i = 0; i < rowCount; i++) {
+            for (String label : labels) {
+                Series<?> series = columns.get(label);
+                System.out.print(series.get(i) + "\t");
             }
             System.out.println();
         }
     }
-    
+
+    /**
+     * Affiche les dernières lignes du DataFrame.
+     *
+     * @param n Le nombre de lignes à afficher depuis le bas.
+     */
     public void printTail(int n) {
-        System.out.println("[TAIL] " + String.join(" | ", columns.keySet()));
-        for (int i = Math.max(0, rowCount - n); i < rowCount; i++) {
-            for (String label : columns.keySet()) {
-                Object value = columns.get(label).get(i);
-                System.out.print(value + " | ");
+        Set<String> labels = columns.keySet();
+        for (String label : labels) {
+            System.out.print(label + "\t");
+        }
+        System.out.println();
+
+        int rowCount = getRowCount();
+        int start = Math.max(0, rowCount - n);
+        for (int i = start; i < rowCount; i++) {
+            for (String label : labels) {
+                Series<?> series = columns.get(label);
+                System.out.print(series.get(i) + "\t");
             }
             System.out.println();
         }
-    }    
-
-    public int getRowCount() {
-        return rowCount;
     }
 
+    /**
+     * Retourne le nombre de lignes dans le DataFrame.
+     *
+     * @return Le nombre de lignes.
+     */
+    public int getRowCount() {
+        if (columns.isEmpty()) {
+            return 0;
+        }
+        return columns.values().iterator().next().size();
+    }
+
+    /**
+     * Retourne le nombre de colonnes dans le DataFrame.
+     *
+     * @return Le nombre de colonnes.
+     */
     public int getColumnCount() {
         return columns.size();
     }
 
-    public Series<?> getColumn(String label) {
-        return columns.get(label);
-    }
-
+    /**
+     * Retourne les étiquettes (labels) de toutes les colonnes du DataFrame.
+     *
+     * @return Un ensemble d’étiquettes de colonnes.
+     */
     public Set<String> getColumnLabels() {
         return columns.keySet();
     }
 
-    public static DataFrame fromCSV(String filePath) throws IOException {
-    return CsvLoader.load(filePath);
+    /**
+     * Retourne la série correspondant à une étiquette donnée.
+     *
+     * @param label Le nom de la colonne souhaitée.
+     * @return La série correspondante, ou null si l’étiquette n’existe pas.
+     */
+    public Series<?> getColumn(String label) {
+        return columns.get(label);
     }
 
+    /**
+     * Construit un DataFrame à partir d’un fichier CSV.
+     *
+     * @param filePath Le chemin vers le fichier CSV.
+     * @return Une instance de DataFrame initialisée avec les données du fichier.
+     * @throws java.io.IOException si le fichier est introuvable ou invalide.
+     */
+    public static DataFrame fromCSV(String filePath) throws java.io.IOException {
+        return CsvLoader.load(filePath);
+    }
 }

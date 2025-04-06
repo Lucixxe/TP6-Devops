@@ -1,5 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-dataframe-lib,com.ilian.dataframe,Series,23,21,2,0,6,7,3,4,2,4
-dataframe-lib,com.ilian.dataframe,App,62,0,0,0,10,0,2,0,2,0
-dataframe-lib,com.ilian.dataframe,DataFrame,155,57,14,4,27,13,12,6,4,5
-dataframe-lib,com.ilian.dataframe,CsvLoader,8,97,1,9,2,17,2,5,1,1
