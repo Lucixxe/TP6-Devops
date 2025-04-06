@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.ilian.dataframe","l":"App"},{"p":"com.ilian.dataframe","l":"CsvLoader"},{"p":"com.ilian.dataframe","l":"DataFrame"},{"p":"com.ilian.dataframe","l":"Series"}];updateSearchResults();
