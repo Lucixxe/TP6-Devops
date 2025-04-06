@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataFrame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dataframe-lib</a> &gt; <a href="index.source.html" class="el_package">com.ilian.dataframe</a> &gt; <span class="el_source">DataFrame.java</span></div><h1>DataFrame.java</h1><pre class="source lang-java linenums">package com.ilian.dataframe;
+
+import java.io.IOException;
+import java.util.*;
+
+public class DataFrame {
+    private Map&lt;String, Series&lt;?&gt;&gt; columns;
+    private int rowCount;
+
+<span class="fc" id="L10">    public DataFrame(List&lt;Series&lt;?&gt;&gt; seriesList) {</span>
+<span class="fc" id="L11">        columns = new LinkedHashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L12" title="1 of 2 branches missed.">        if (seriesList.isEmpty()) {</span>
+<span class="nc" id="L13">            throw new IllegalArgumentException(&quot;La liste des séries ne peut pas être vide.&quot;);</span>
+        }
+
+<span class="fc" id="L16">        rowCount = seriesList.get(0).size();</span>
+
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        for (Series&lt;?&gt; series : seriesList) {</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">            if (series.size() != rowCount) {</span>
+<span class="nc" id="L20">                throw new IllegalArgumentException(&quot;Toutes les séries doivent avoir la même taille.&quot;);</span>
+            }
+<span class="fc" id="L22">            columns.put(series.getLabel(), series);</span>
+<span class="fc" id="L23">        }</span>
+<span class="fc" id="L24">    }</span>
+
+    public void printFull() {
+        // Affiche les labels de colonnes
+<span class="nc" id="L28">        System.out.println(String.join(&quot; | &quot;, columns.keySet()));</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        for (int i = 0; i &lt; rowCount; i++) {</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">            for (String label : columns.keySet()) {</span>
+<span class="nc" id="L32">                Object value = columns.get(label).get(i);</span>
+<span class="nc" id="L33">                System.out.print(value + &quot; | &quot;);</span>
+<span class="nc" id="L34">            }</span>
+<span class="nc" id="L35">            System.out.println();</span>
+        }
+<span class="nc" id="L37">    }</span>
+
+    public void printHead(int n) {
+<span class="nc" id="L40">        System.out.println(&quot;[HEAD] &quot; + String.join(&quot; | &quot;, columns.keySet()));</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        for (int i = 0; i &lt; Math.min(n, rowCount); i++) {</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            for (String label : columns.keySet()) {</span>
+<span class="nc" id="L43">                Object value = columns.get(label).get(i);</span>
+<span class="nc" id="L44">                System.out.print(value + &quot; | &quot;);</span>
+<span class="nc" id="L45">            }</span>
+<span class="nc" id="L46">            System.out.println();</span>
+        }
+<span class="nc" id="L48">    }</span>
+    
+    public void printTail(int n) {
+<span class="nc" id="L51">        System.out.println(&quot;[TAIL] &quot; + String.join(&quot; | &quot;, columns.keySet()));</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        for (int i = Math.max(0, rowCount - n); i &lt; rowCount; i++) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">            for (String label : columns.keySet()) {</span>
+<span class="nc" id="L54">                Object value = columns.get(label).get(i);</span>
+<span class="nc" id="L55">                System.out.print(value + &quot; | &quot;);</span>
+<span class="nc" id="L56">            }</span>
+<span class="nc" id="L57">            System.out.println();</span>
+        }
+<span class="nc" id="L59">    }    </span>
+
+    public int getRowCount() {
+<span class="fc" id="L62">        return rowCount;</span>
+    }
+
+    public int getColumnCount() {
+<span class="fc" id="L66">        return columns.size();</span>
+    }
+
+    public Series&lt;?&gt; getColumn(String label) {
+<span class="fc" id="L70">        return columns.get(label);</span>
+    }
+
+    public Set&lt;String&gt; getColumnLabels() {
+<span class="nc" id="L74">        return columns.keySet();</span>
+    }
+
+    public static DataFrame fromCSV(String filePath) throws IOException {
+<span class="fc" id="L78">    return CsvLoader.load(filePath);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

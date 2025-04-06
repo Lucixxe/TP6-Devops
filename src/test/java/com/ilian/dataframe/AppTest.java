@@ -1,29 +1,27 @@
 package com.ilian.dataframe;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import java.net.URL;
+import java.nio.file.Paths;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
+public class AppTest {
+
     @Test
-    public void testDataFrameConstruction() {
-        Series<Integer> ages = new Series<>("Age", Arrays.asList(25, 30, 35));
-        Series<String> noms = new Series<>("Nom", Arrays.asList("Alice", "Bob", "Charlie"));
+    public void testFromCSV() throws Exception {
+        URL resource = getClass().getClassLoader().getResource("test-data.csv");
+        assertNotNull(resource, "Erreur : fichier test-data.csv introuvable !");
+        String filePath = Paths.get(resource.toURI()).toString();
 
-        DataFrame df = new DataFrame(List.of(ages, noms));
+        DataFrame df = DataFrame.fromCSV(filePath);
 
-        assertEquals(3, df.getRowCount());
-        assertEquals(2, df.getColumnCount());
-        assertNotNull(df.getColumn("Age"));
-        assertNotNull(df.getColumn("Nom"));
+        assertEquals(3, df.getRowCount(), "Le nombre de lignes est incorrect");
+        assertEquals(3, df.getColumnCount(), "Le nombre de colonnes est incorrect");
+
+        assertEquals("Alice", df.getColumn("Nom").get(0));
+        assertEquals("22", df.getColumn("Age").get(0));
+        assertEquals("15", df.getColumn("Note").get(0));
     }
 }
