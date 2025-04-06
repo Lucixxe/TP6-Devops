@@ -1,5 +1,6 @@
 package com.ilian.dataframe;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,12 +9,13 @@ public class App {
         Series<Integer> ages = new Series<>("Age", Arrays.asList(25, 30, 35));
         Series<String> names = new Series<>("Nom", Arrays.asList("Alice", "Bob", "Charlie"));
 
-        DataFrame df = new DataFrame(List.of(ages, names));
-        df.printFull();
-        df.printHead(2);
-        df.printTail(2);
+    try {
+    DataFrame df = DataFrame.fromCSV("data/etudiants.csv");
+    df.printFull();
+    } catch (IOException e) {
+    System.err.println("Erreur lors du chargement du fichier CSV : " + e.getMessage());
+    }
+
         System.out.println("Test CD pipeline");
-
-
     }
 }
