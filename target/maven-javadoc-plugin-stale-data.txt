@@ -1,0 +1,42 @@
+@options
+@packages
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/benao/Documents/VSC Projects/TP6-Devops/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/benao/Documents/VSC Projects/TP6-Devops/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'dataframe-lib 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'dataframe-lib 1.0-SNAPSHOT API'
+com.ilian.dataframe
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\src\main\java = 1743591028867
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\allclasses-index.html = 1743963057751
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\allpackages-index.html = 1743963057755
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\element-list = 1743963057643
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\help-doc.html = 1743963057789
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\index-all.html = 1743963057781
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\index.html = 1743963057784
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\jquery-ui.overrides.css = 1743963057814
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\member-search-index.js = 1743963057763
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\module-search-index.js = 1743963057757
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\overview-tree.html = 1743963057724
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\package-search-index.js = 1743963057759
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\script.js = 1743963057795
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\search.js = 1743963057800
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\stylesheet.css = 1743963057792
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\tag-search-index.js = 1743963057764
+C:\Users\benao\Documents\VSC Projects\TP6-Devops\target\site\apidocs\type-search-index.js = 1743963057761
