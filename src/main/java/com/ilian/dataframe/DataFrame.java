@@ -1,5 +1,6 @@
 package com.ilian.dataframe;
 
+import java.io.IOException;
 import java.util.*;
 
 public class DataFrame {
@@ -72,4 +73,9 @@ public class DataFrame {
     public Set<String> getColumnLabels() {
         return columns.keySet();
     }
+
+    public static DataFrame fromCSV(String filePath) throws IOException {
+    return CsvLoader.load(filePath);
+    }
+
 }
