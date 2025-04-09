@@ -15,7 +15,7 @@ public class DataFrame {
      * @throws IllegalArgumentException si plusieurs séries ont des étiquettes identiques.
      */
     public DataFrame(List<Series<?>> seriesList) {
-        columns = new HashMap<>();
+        columns = new LinkedHashMap<>();
         for (Series<?> series : seriesList) {
             String label = series.getLabel();
             if (columns.containsKey(label)) {
@@ -29,62 +29,67 @@ public class DataFrame {
      * Affiche l'intégralité du contenu du DataFrame dans la console.
      */
     public void printFull() {
-        Set<String> labels = columns.keySet();
-        for (String label : labels) {
-            System.out.print(label + "\t");
+        List<String> labels = new ArrayList<>(columns.keySet());
+    
+        // Print column headers
+        for (int j = 0; j < labels.size(); j++) {
+            System.out.print(labels.get(j));
+            if (j < labels.size() - 1) System.out.print("\t");
         }
         System.out.println();
-
+    
+        // Print rows
         int rowCount = getRowCount();
         for (int i = 0; i < rowCount; i++) {
-            for (String label : labels) {
-                Series<?> series = columns.get(label);
-                System.out.print(series.get(i) + "\t");
+            for (int j = 0; j < labels.size(); j++) {
+                Series<?> series = columns.get(labels.get(j));
+                System.out.print(series.get(i));
+                if (j < labels.size() - 1) System.out.print("\t");
             }
             System.out.println();
         }
     }
-
-    /**
-     * Affiche les premières lignes du DataFrame.
-     *
-     * @param n Le nombre de lignes à afficher depuis le haut.
-     */
+    
     public void printHead(int n) {
-        Set<String> labels = columns.keySet();
-        for (String label : labels) {
-            System.out.print(label + "\t");
+        List<String> labels = new ArrayList<>(columns.keySet());
+    
+        // Print column headers
+        for (int j = 0; j < labels.size(); j++) {
+            System.out.print(labels.get(j));
+            if (j < labels.size() - 1) System.out.print("\t");
         }
         System.out.println();
-
+    
+        // Print rows
         int rowCount = Math.min(n, getRowCount());
         for (int i = 0; i < rowCount; i++) {
-            for (String label : labels) {
-                Series<?> series = columns.get(label);
-                System.out.print(series.get(i) + "\t");
+            for (int j = 0; j < labels.size(); j++) {
+                Series<?> series = columns.get(labels.get(j));
+                System.out.print(series.get(i));
+                if (j < labels.size() - 1) System.out.print("\t");
             }
             System.out.println();
         }
     }
-
-    /**
-     * Affiche les dernières lignes du DataFrame.
-     *
-     * @param n Le nombre de lignes à afficher depuis le bas.
-     */
+    
     public void printTail(int n) {
-        Set<String> labels = columns.keySet();
-        for (String label : labels) {
-            System.out.print(label + "\t");
+        List<String> labels = new ArrayList<>(columns.keySet());
+    
+        // Print column headers
+        for (int j = 0; j < labels.size(); j++) {
+            System.out.print(labels.get(j));
+            if (j < labels.size() - 1) System.out.print("\t");
         }
         System.out.println();
-
+    
+        // Print rows
         int rowCount = getRowCount();
         int start = Math.max(0, rowCount - n);
         for (int i = start; i < rowCount; i++) {
-            for (String label : labels) {
-                Series<?> series = columns.get(label);
-                System.out.print(series.get(i) + "\t");
+            for (int j = 0; j < labels.size(); j++) {
+                Series<?> series = columns.get(labels.get(j));
+                System.out.print(series.get(i));
+                if (j < labels.size() - 1) System.out.print("\t");
             }
             System.out.println();
         }
