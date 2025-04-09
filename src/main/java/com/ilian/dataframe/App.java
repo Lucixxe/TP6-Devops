@@ -22,7 +22,7 @@ public class App {
      */
     public static void main(String[] args) {
         try {
-            DataFrame df = CsvLoader.load("data.csv");
+            DataFrame df = CsvLoader.load("data/etudiants.csv");
             df.printHead(5);
         } catch (IOException e) {
             System.err.println("Erreur lors du chargement du fichier CSV : " + e.getMessage());
