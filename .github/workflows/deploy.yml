@@ -19,6 +19,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Maven test
+      run: mvn test
+
     - name: Build & Deploy with Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/.github/settings.xml
       env:
