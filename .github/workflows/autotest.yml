@@ -5,9 +5,9 @@ on:
     branches:
       - main  # Trigger when a PR targets the 'main' branch
     types:
-      - opened        # Trigger when a PR is opened
-      - synchronize  # Trigger when a PR is updated (e.g., commits pushed)
-      - reopened     # Trigger when a PR is reopened
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   test:
@@ -23,11 +23,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Run tests with Maven
-      run: mvn test
-
-    - name: Check code coverage
-      run: mvn verify
+    - name: Build, test, and check code coverage
+      id: check-code-coverage
+      run: mvn clean verify
 
     - name: Ensure code coverage is above 60%
       if: success() && steps.check-code-coverage.outcome == 'success'
