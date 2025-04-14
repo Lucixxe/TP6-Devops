@@ -75,6 +75,10 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <minimum>0.6</minimum>
+          <failOnViolation>true</failOnViolation>
+        </configuration>
       </plugin>
 
       <!-- ✅ Déploiement Maven (CD) -->

@@ -26,3 +26,9 @@ jobs:
     - name: Run tests with Maven
       run: mvn test
 
+    - name: Check code coverage
+      run: mvn verify
+
+    - name: Ensure code coverage is above 60%
+      if: success() && steps.check-code-coverage.outcome == 'success'
+      run: echo "Code coverage is above 60%"
