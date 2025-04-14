@@ -9,11 +9,11 @@
 ## ✨ Fonctionnalités principales
 
 - Création d'un `DataFrame` à partir de colonnes (`Series`)
+- Import/export CSV
 - Affichage complet d'un `DataFrame`
 - Affichage de `head(n)` et `tail(n)` pour aperçus rapides
 - Fonctions statistiques (en cours de développement)
 - Méthodes de sélection de lignes et colonnes (en cours)
-- Import/export CSV (fonctionnel)
 - Architecture orientée test avec JUnit 5
 
 ## ⚙️ Outils et technologies
