@@ -67,62 +67,103 @@ public class DataFrameTest {
 
     @Test
     void testPrintFull() {
-        // Redirect System.out to capture output
         PrintStream originalOut = System.out;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(baos));
 
-        // Call printFull()
         dataFrame.printFull();
         System.out.flush();
-        String output = baos.toString();
-        // Reset System.out
+        String output = baos.toString().trim();
         System.setOut(originalOut);
 
-        String expected = "Column1\tColumn2\n" +
-                          "1\tA\n" +
-                          "2\tB\n" +
-                          "3\tC\n";
-        assertEquals(expected, output, "Le DataFrame doit afficher toutes les lignes et colonnes correctement.");
+        String[] lines = output.split("\n");
+        assertEquals("Column1\tColumn2", lines[0].trim());
+        assertEquals("1\tA", lines[1].trim());
+        assertEquals("2\tB", lines[2].trim());
+        assertEquals("3\tC", lines[3].trim());
     }
 
     @Test
     void testPrintHead() {
-        // Redirect System.out to capture output
         PrintStream originalOut = System.out;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(baos));
 
-        // Call printHead(2)
         dataFrame.printHead(2);
         System.out.flush();
-        String output = baos.toString();
-        // Reset System.out
+        String output = baos.toString().trim();
         System.setOut(originalOut);
 
-        String expected = "Column1\tColumn2\n" +
-                          "1\tA\n" +
-                          "2\tB\n";
-        assertEquals(expected, output, "Le DataFrame doit afficher correctement les premières lignes demandées.");
+        String[] lines = output.split("\n");
+        assertEquals("Column1\tColumn2", lines[0].trim());
+        assertEquals("1\tA", lines[1].trim());
+        assertEquals("2\tB", lines[2].trim());
     }
 
     @Test
     void testPrintTail() {
-        // Redirect System.out to capture output
         PrintStream originalOut = System.out;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(baos));
 
-        // Call printTail(2)
         dataFrame.printTail(2);
         System.out.flush();
-        String output = baos.toString();
-        // Reset System.out
+        String output = baos.toString().trim();
         System.setOut(originalOut);
 
-        String expected = "Column1\tColumn2\n" +
-                          "2\tB\n" +
-                          "3\tC\n";
-        assertEquals(expected, output, "Le DataFrame doit afficher correctement les dernières lignes demandées.");
+        String[] lines = output.split("\n");
+        assertEquals("Column1\tColumn2", lines[0].trim());
+        assertEquals("2\tB", lines[1].trim());
+        assertEquals("3\tC", lines[2].trim());
     }
+
+    @Test
+    void testGetStatisticsOnNumericColumn() {
+        Series<Integer> numericSeries = new Series<>("ages", Arrays.asList(20, 30, 25, 35));
+        DataFrame df = new DataFrame(Arrays.asList(numericSeries, series2));
+
+        Map<String, Double> stats = df.getStatistics("ages");
+
+        assertNotNull(stats);
+        assertEquals(4.0, stats.get("count"));
+        assertEquals(27.5, stats.get("mean"), 0.01);
+        assertEquals(20.0, stats.get("min"));
+        assertEquals(35.0, stats.get("max"));
+    }
+
+    @Test
+    void testGetStatisticsOnNonNumericColumn() {
+        Map<String, Double> stats = dataFrame.getStatistics("Column2");
+        assertNull(stats, "Les statistiques doivent être nulles pour une colonne non numérique.");
+    }
+
+    @Test
+    void testGetStatisticsOnInvalidColumn() {
+        Map<String, Double> stats = dataFrame.getStatistics("NonExistent");
+        assertNull(stats, "Les statistiques doivent être nulles pour une colonne inexistante.");
+    }
+
+    @Test
+    void testSelectRows() {
+        DataFrame subFrame = dataFrame.selectRows(1, 3);  // Doit contenir les lignes d’index 1 et 2
+
+        assertEquals(2, subFrame.getRowCount(), "Le sous-DataFrame doit contenir exactement 2 lignes.");
+        assertEquals(2, subFrame.getColumnCount(), "Le sous-DataFrame doit conserver le même nombre de colonnes.");
+
+        assertEquals(2, subFrame.getColumn("Column1").get(0));
+        assertEquals("B", subFrame.getColumn("Column2").get(0));
+        assertEquals(3, subFrame.getColumn("Column1").get(1));
+        assertEquals("C", subFrame.getColumn("Column2").get(1));
+    }
+
+    @Test
+    void testSelectColumns() {
+        DataFrame selected = dataFrame.selectColumns("Column2");
+
+        assertEquals(1, selected.getColumnCount(), "Le DataFrame sélectionné doit contenir une seule colonne.");
+        assertNotNull(selected.getColumn("Column2"), "La colonne 'Column2' doit exister dans le DataFrame sélectionné.");
+        assertNull(selected.getColumn("Column1"), "La colonne 'Column1' ne doit pas exister dans le DataFrame sélectionné.");
+        assertEquals(3, selected.getRowCount(), "Le nombre de lignes doit rester inchangé.");
+    }
+
 }

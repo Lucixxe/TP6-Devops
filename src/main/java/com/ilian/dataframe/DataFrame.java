@@ -171,34 +171,41 @@ public class DataFrame {
     }
     
     /**
-    * Calcule les statistiques (min, max, moyenne) pour chaque colonne numérique du DataFrame.
-    *
-    * @return Une chaîne contenant les statistiques formatées pour chaque colonne numérique.
-    */
-    public String getStatistics() {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Series<?>> entry : columns.entrySet()) {
-            String label = entry.getKey();
-            Series<?> series = entry.getValue();
+     * Calcule des statistiques de base (count, mean, min, max) sur une colonne numérique.
+     *
+     * @param label Le nom de la colonne à analyser.
+     * @return Une map contenant les statistiques, ou null si la colonne n'est pas numérique ou introuvable.
+     */
+    public Map<String, Double> getStatistics(String label) {
+        Series<?> series = columns.get(label);
+        if (series == null) return null;
 
-            // Vérifie si la série contient des valeurs numériques
-            if (!series.getValues().isEmpty() && series.getValues().get(0) instanceof Number) {
-                List<Number> values = (List<Number>) series.getValues();
-                double sum = 0;
-                double min = Double.MAX_VALUE;
-                double max = -Double.MAX_VALUE;
-
-                for (Number value : values) {
-                    double v = value.doubleValue();
-                    sum += v;
-                    if (v < min) min = v;
-                    if (v > max) max = v;
-                }
-
-                double mean = sum / values.size();
-                sb.append(String.format("Colonne '%s' -> min: %.2f | max: %.2f | mean: %.2f\n", label, min, max, mean));
-            }
+        List<?> values = series.getValues();
+        if (values.isEmpty() || !(values.get(0) instanceof Number)) {
+            return null; // non numérique
         }
-        return sb.toString();
+
+        double sum = 0;
+        double min = Double.MAX_VALUE;
+        double max = -Double.MAX_VALUE;
+        int count = 0;
+
+        for (Object obj : values) {
+            if (!(obj instanceof Number)) continue;
+            double val = ((Number) obj).doubleValue();
+            sum += val;
+            min = Math.min(min, val);
+            max = Math.max(max, val);
+            count++;
+        }
+
+        if (count == 0) return null;
+
+        Map<String, Double> stats = new HashMap<>();
+        stats.put("count", (double) count);
+        stats.put("mean", sum / count);
+        stats.put("min", min);
+        stats.put("max", max);
+        return stats;
     }
 }
