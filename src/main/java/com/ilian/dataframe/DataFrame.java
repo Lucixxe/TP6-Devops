@@ -145,4 +145,29 @@ public class DataFrame {
     public static DataFrame fromCSV(String filePath) throws java.io.IOException {
         return CsvLoader.load(filePath);
     }
+
+    public DataFrame selectRows(int fromIndex, int toIndex) {
+        if (fromIndex < 0 || toIndex > getRowCount() || fromIndex >= toIndex) {
+            throw new IllegalArgumentException("Invalid row range");
+        }
+    
+        List<Series<?>> newSeries = new ArrayList<>();
+    
+        for (Series<?> s : columns.values()) {
+            List<?> subList = s.getValues().subList(fromIndex, toIndex);
+            newSeries.add(new Series<>(s.getLabel(), new ArrayList<>(subList)));
+        }
+    
+        return new DataFrame(newSeries);
+    }    
+
+    
+    public DataFrame selectColumns(String... labels) {
+        List<Series<?>> selected = new ArrayList<>();
+        for (String label : labels) {
+            selected.add(getColumn(label));
+        }
+        return new DataFrame(selected);
+    }
+    
 }
