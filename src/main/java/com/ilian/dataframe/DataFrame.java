@@ -50,6 +50,15 @@ public class DataFrame {
         }
     }
     
+    /**
+     * Affiche les premières lignes du DataFrame dans la console.
+     *
+     * Cette méthode affiche les étiquettes de colonnes, suivies des {@code n} premières lignes
+     * du tableau. Elle est utile pour visualiser un aperçu rapide des données en tête de DataFrame.
+     *
+     * @param n Le nombre de lignes à afficher à partir du début.
+     *          Si {@code n} dépasse le nombre total de lignes, toutes les lignes sont affichées.
+    */
     public void printHead(int n) {
         List<String> labels = new ArrayList<>(columns.keySet());
     
@@ -72,6 +81,16 @@ public class DataFrame {
         }
     }
     
+
+    /**
+     * Affiche les dernières lignes du DataFrame dans la console.
+     *
+     * Cette méthode affiche les étiquettes de colonnes, suivies des {@code n} dernières lignes
+     * du tableau. Elle est utile pour visualiser la fin du DataFrame, souvent après un tri ou un traitement.
+     *
+     * @param n Le nombre de lignes à afficher à partir de la fin.
+     *          Si {@code n} dépasse le nombre total de lignes, toutes les lignes sont affichées.
+    */
     public void printTail(int n) {
         List<String> labels = new ArrayList<>(columns.keySet());
     
@@ -146,6 +165,18 @@ public class DataFrame {
         return CsvLoader.load(filePath);
     }
 
+
+    /**
+     * Sélectionne un sous-ensemble de lignes du DataFrame.
+     *
+     * Cette méthode extrait les lignes comprises entre {@code fromIndex} (inclus) et {@code toIndex} (exclus),
+     * pour toutes les colonnes. Elle est utile pour découper une partie du DataFrame sans modifier l'original.
+     *
+     * @param fromIndex L’index de début (inclus).
+     * @param toIndex   L’index de fin (exclu).
+     * @return Un nouveau DataFrame contenant uniquement les lignes sélectionnées.
+     * @throws IllegalArgumentException si les index sont invalides (négatifs, hors bornes ou mal ordonnés).
+    */
     public DataFrame selectRows(int fromIndex, int toIndex) {
         if (fromIndex < 0 || toIndex > getRowCount() || fromIndex >= toIndex) {
             throw new IllegalArgumentException("Invalid row range");
@@ -161,7 +192,13 @@ public class DataFrame {
         return new DataFrame(newSeries);
     }    
 
-    
+    /**
+     * Sélectionne un sous-ensemble de colonnes du DataFrame selon leurs étiquettes.
+     *
+     * @param labels Les étiquettes des colonnes à sélectionner.
+     * @return Un nouveau DataFrame ne contenant que les colonnes spécifiées.
+     * @throws NullPointerException si une étiquette ne correspond à aucune colonne existante.
+    */
     public DataFrame selectColumns(String... labels) {
         List<Series<?>> selected = new ArrayList<>();
         for (String label : labels) {
