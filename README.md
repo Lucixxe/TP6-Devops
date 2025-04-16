@@ -181,6 +181,8 @@ Oscar,23,17
 - Nous avons aussi tenté d’utiliser Google Cloud, mais l’expérience a été compliquée à cause d’une prise en main peu intuitive.
 
 - Au final, ce projet nous a permis de mieux comprendre comment structurer un projet DevOps. Le TP était intéressant.
+
+
 ---
 
 ## 👨‍💻 Auteurs
