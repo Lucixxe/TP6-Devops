@@ -21,7 +21,7 @@ public class AppTest {
         assertEquals(3, df.getColumnCount(), "Le nombre de colonnes est incorrect");
 
         assertEquals("Alice", df.getColumn("Nom").get(0));
-        assertEquals("22", df.getColumn("Age").get(0));
-        assertEquals("15", df.getColumn("Note").get(0));
+        assertEquals(22, df.getColumn("Age").get(0));
+        assertEquals(15, df.getColumn("Note").get(0));
     }
 }
