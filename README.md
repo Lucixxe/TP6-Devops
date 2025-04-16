@@ -65,6 +65,7 @@ La couverture de code est générée via JaCoCo dans : `target/site/jacoco/index
 **Couverture obtenue : > 79%**
 
 ---
+[![Unit Tests & Deploy](https://github.com/Lucixxe/TP6-Devops/actions/workflows/deploy.yml/badge.svg?branch=zodecky%2Ffeature%2Fadd-cd)](https://github.com/Lucixxe/TP6-Devops/actions/workflows/deploy.yml)
 
 ## 📄 Générer la documentation JavaDoc
 
@@ -124,6 +125,44 @@ Oscar,23,17
 
 ---
 
+## 🧰 Choix des outils
+
+- Maven pour la gestion de projet, des dépendances et l’exécution des tests.
+- JaCoCo pour la génération de rapports de couverture de code.
+- JavaDoc pour générer la documentation technique.
+- Docker pour garantir la portabilité et la simplicité du déploiement.
+- JUnit pour les tests unitaires.
+
+## 🔄 Structure Git et Workflow
+
+### 📚 Branches Git
+- main : branche stable contenant les versions validées
+- feature/<nom> : développement de nouvelles fonctionnalités (revues de code obligatoires)
+- patch/<nom> : petites corrections ou ajustements rapides
+- devops/<outil> : changements liés aux outils DevOps (Docker, GitHub Actions, etc.)
+
+### 📦 Pull Requests
+- Toutes les PR vers main passent par des vérifications automatiques
+- Les branches feature/* sont systématiquement soumises à revue par un membre de l’équipe
+
+⸻
+
+### 🚀 CI/CD avec GitHub Actions
+
+#### 🔧 Intégration Continue (CI)
+**Chaque pull request vers main déclenche automatiquement :**
+
+- Compilation du projet
+- Exécution de tous les tests unitaires
+- Génération du rapport de couverture avec JaCoCo
+- Le merge est refusé si la couverture est < 60%
+
+#### 🚀 Déploiement Continu (CD)
+**Chaque push ou merge sur main déclenche :**
+
+- Les mêmes tests et vérifications que la CI
+- Si tout passe, le projet est automatiquement déployé sur GitHub Maven Packages 
+
 ## 💡 Améliorations possibles (non demandées mais envisagées)
 
 - Filtres conditionnels (`df.filter(col > 15)`)
@@ -133,9 +172,21 @@ Oscar,23,17
 
 ---
 
+## 💬 Feedback
+
+- Le début du projet a été un peu difficile à organiser, en partie à cause du nombre d’outils à configurer. Certains, comme Docker, demandent pas mal d’ajustements pour être vraiment utiles dans un projet simple.
+
+- En revanche, GitHub Actions s’est révélé très efficace, notamment pour automatiser les tests lors des Pull Requests. Une fois le rythme de travail établi, la collaboration est devenue plus fluide.
+
+- Nous avons aussi tenté d’utiliser Google Cloud, mais l’expérience a été compliquée à cause d’une prise en main peu intuitive.
+
+- Au final, ce projet nous a permis de mieux comprendre comment structurer un projet DevOps. Le TP était intéressant.
+---
+
 ## 👨‍💻 Auteurs
 
 - **Ilian BENAOUDIA**
-- **Gabriel Zagury de Magalhaes**
+- **Gabriel ZAGURY DE MAGALHÃES**
 
+---
 Projet encadré dans le cadre du **TP6 de DevOps** – M1 Informatique – UGA
