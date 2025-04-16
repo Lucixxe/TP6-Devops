@@ -1,31 +1,62 @@
 package com.ilian.dataframe;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Classe principale de l'application.
- * <p>
- * Cette classe contient le point d'entrée de l'application permettant de charger un fichier CSV
- * et d'afficher les 5 premières lignes du DataFrame résultant.
- * </p>
+ * Permet de charger un fichier CSV et d'interagir avec son contenu via un menu CLI.
  */
 public class App {
 
-    /**
-     * Point d'entrée principal de l'application.
-     * <p>
-     * Charge un fichier CSV à partir d'un chemin spécifié, puis affiche les 5 premières lignes.
-     * Le fichier utilisé est <code>data.csv</code> situé à la racine du projet.
-     * </p>
-     *
-     * @param args arguments de la ligne de commande (non utilisés)
-     */
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        DataFrame df = null;
+
         try {
-            DataFrame df = CsvLoader.load("data/etudiants.csv");
-            df.printHead(5);
+            df = CsvLoader.load("data/etudiants.csv");
+            System.out.println("✅ Fichier chargé avec succès !");
         } catch (IOException e) {
-            System.err.println("Erreur lors du chargement du fichier CSV : " + e.getMessage());
+            System.err.println("❌ Erreur lors du chargement du fichier CSV : " + e.getMessage());
+            System.exit(1);
+        }
+
+        while (true) {
+            System.out.println("\n--- MENU ---");
+            System.out.println("1. Afficher les 5 premières lignes (head)");
+            System.out.println("2. Afficher les 5 dernières lignes (tail)");
+            System.out.println("3. Afficher les statistiques d'une colonne");
+            System.out.println("4. Quitter");
+            System.out.print("👉 Votre choix : ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    df.printHead(5);
+                    break;
+                case "2":
+                    df.printTail(5);
+                    break;
+                case "3":
+                    System.out.print("Nom de la colonne pour les stats : ");
+                    String colName = scanner.nextLine().trim();
+                    Map<String, Double> stats = df.getStatistics(colName);
+                    if (stats != null) {
+                        System.out.println("📊 Statistiques pour \"" + colName + "\" :");
+                        stats.forEach((k, v) -> System.out.println(k + " = " + v));
+                    } else {
+                        System.out.println("⚠️ Colonne invalide ou non numérique.");
+                    }
+                    break;
+                case "4":
+                    System.out.println("👋 Au revoir !");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("⛔ Choix invalide. Veuillez réessayer.");
+            }
         }
     }
 }
