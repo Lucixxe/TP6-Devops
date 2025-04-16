@@ -1,75 +1,141 @@
-# TP6-Devops-DataframeLib
+# TP6 DevOps – Mini-Librairie `DataFrame` en Java
 
-**Une bibliothèque Java d'analyse de données inspirée de Pandas**
+Bienvenue dans ce projet DevOps réalisé dans le cadre du Master 1 Informatique à l'Université Grenoble Alpes.  
+Ce projet met en œuvre une mini-librairie de manipulation de données inspirée de `pandas`, avec une approche DevOps complète.
 
-## 🚀 Objectif
+## 📚 Objectifs pédagogiques
 
-`DataframeLib` est une bibliothèque d'analyse de données légère et orientée objet, écrite en Java, qui vise à reproduire certaines fonctionnalités essentielles de la librairie Pandas de Python.
+- Développement collaboratif avec Git (branches, commits, merge)
+- Mise en place de tests unitaires et couverture de code
+- Génération de documentation avec JavaDoc
+- Dockerisation et déploiement sur Docker Hub
+- Suivi de qualité logicielle avec Maven et JaCoCo
 
-## ✨ Fonctionnalités principales
+---
 
-- Création d'un `DataFrame` à partir de colonnes (`Series`)
-- Import/export CSV
-- Affichage complet d'un `DataFrame`
-- Affichage de `head(n)` et `tail(n)` pour aperçus rapides
-- Fonctions statistiques (en cours de développement)
-- Méthodes de sélection de lignes et colonnes (en cours)
-- Architecture orientée test avec JUnit 5
+## 🛠️ Fonctionnalités principales
 
-## ⚙️ Outils et technologies
+| Classe       | Description |
+|--------------|-------------|
+| `Series<T>`  | Colonne typée contenant des données homogènes |
+| `DataFrame`  | Tableau de données composé de plusieurs `Series` |
+| `CsvLoader`  | Lecture d’un fichier CSV et conversion en `DataFrame` |
+| `App`        | Application interactive en ligne de commande avec menu |
 
-- **Java 17** : langage principal
-- **Maven** : gestionnaire de projet et dépendances
-- **JUnit 5** : framework de tests unitaires
-- **JaCoCo** : outil de couverture de code
-- **GitHub Actions** : pipeline CI/CD
+Fonctionnalités clés :
+- Chargement depuis un fichier CSV
+- Affichage : `head`, `tail`, `full`
+- Sélection de colonnes et lignes
+- Statistiques (`min`, `max`, `mean`, `count`) sur colonnes numériques
 
-## 📚 Structure Git
+---
 
-- Branches principales : `main`
-- Branches de fonctionnalité : `feature/<nom>`
-- Branches de correctifs : `patch/<nom>`
-- Branches DevOps : `devops/<outil>` (ex: ajout de GitHub Actions)
-- Pull Requests : toutes les PR vers `main` sont soumises à des vérifications automatisées
+## 📂 Structure du projet
 
-## 🚜 CI/CD
+```
+TP6-Devops/
+├── src/
+│   ├── main/
+│   │   └── java/com/ilian/dataframe/
+│   │       ├── App.java
+│   │       ├── CsvLoader.java
+│   │       ├── DataFrame.java
+│   │       └── Series.java
+│   └── test/
+│       └── java/com/ilian/dataframe/
+│           ├── AppTest.java
+│           └── DataFrameTest.java
+├── data/
+│   └── etudiants.csv
+├── Dockerfile
+├── pom.xml
+└── README.md
+```
 
-Notre pipeline CI/CD est déployé via GitHub Actions.
+---
 
-### ✅ Intégration Continue (CI)
+## ✅ Exécution des tests
 
-- Chaque **Pull Request** vers `main` déclenche :
-  - Compilation et tests automatiques
-  - Analyse de couverture de code avec JaCoCo
-  - Refus de merge si la couverture < 60%
+Lancer tous les tests avec Maven :
+```bash
+mvn clean test
+```
 
-### 🌟 Déploiement Continu (CD)
+La couverture de code est générée via JaCoCo dans : `target/site/jacoco/index.html`  
+**Couverture obtenue : > 79%**
 
-- Chaque \*\*merge ou push sur \*\***`main`** déclenche :
-  - Les mêmes tests que pour la CI
-  - Si tout passe, **déploiement automatique** vers GitHub Maven Packages
+---
 
+## 📄 Générer la documentation JavaDoc
 
+```bash
+mvn javadoc:javadoc
+```
 
-## 📊 Fonctionnalités à venir
+JavaDoc générée dans le dossier : `target/site/apidocs/index.html`
 
-- Opérations statistiques : moyenne, variance, etc.
+---
 
-- Sélections : par index, conditions, labels
+## 🐳 Dockerisation
 
-- Amélioration de la couverture de code
+### 1. Construire l’image Docker
+```bash
+docker build -t tp6-devops .
+```
 
-## ✍️ Contribution
+### 2. Lancer l'application
+```bash
+docker run -it --rm tp6-devops
+```
 
-- Forkez le repo
+> Menu interactif pour explorer les données et afficher les statistiques.
 
-- Créez une branche `feature/` ou `patch/`&#x20;
+### 3. Image disponible sur Docker Hub
 
-- Assurez-vous que les **tests** **passent** et que la **couverture → ≥ 60%**
+📦 [https://hub.docker.com/r/lucixxe/tp6-devops](https://hub.docker.com/r/lucixxe/tp6-devops)
 
-- Soumettez une PR avec une description claire
+```bash
+docker pull lucixxe/tp6-devops:latest
+docker run -it --rm lucixxe/tp6-devops:latest
+```
+
+---
+
+## 🧪 Exemple de fichier `etudiants.csv`
+
+```
+Nom,Age,Note
+Alice,22,15
+Bob,23,13
+Charlie,21,18
+David,24,12
+Eva,22,17
+Farid,23,11
+Gina,22,19
+Hugo,25,14
+Imane,21,13
+Jules,24,16
+Katia,23,16
+Léo,25,18
+Mina,21,15
+Nora,22,12
+Oscar,23,17
+```
+
+---
+
+## 💡 Améliorations possibles (non demandées mais envisagées)
+
+- Filtres conditionnels (`df.filter(col > 15)`)
+- Export CSV
+- Support d'autres formats (JSON, XML)
+- Interface graphique (Swing ou web)
+
+---
 
 ## 👨‍💻 Auteurs
 
-- Ilian Benaoudia
-- Gabriel Zagury de Magalhaes
+- **Ilian BENAOUDIA**
+- **Gabriel Zagury de Magalhaes**
+
+Projet encadré dans le cadre du **TP6 de DevOps** – M1 Informatique – UGA
